@@ -9,10 +9,14 @@
 import UIKit
 
 class TodoListViewController: UITableViewController {
+    let defalts = UserDefaults.standard
 var  itemArray = ["写代码","学高数","记单词"]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        if let items = defalts.array(forKey: "ToDoListArray") as? [String] {
+            itemArray = items
+        }
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:"ToDoItemCell",for:indexPath)
@@ -38,6 +42,7 @@ var  itemArray = ["写代码","学高数","记单词"]
         let action = UIAlertAction (title: "添加项目", style: .default){
             (action) in
             self.itemArray.append(textField.text!)
+            self.defalts.set(self.itemArray, forKey: "ToDoListArray")
             self.tableView.reloadData()
             print(textField.text!)
         }
