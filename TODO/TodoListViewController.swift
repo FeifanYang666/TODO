@@ -9,7 +9,7 @@
 import UIKit
 
 class TodoListViewController: UITableViewController {
-let itemArray = ["写代码","学高数","记单词"]
+var  itemArray = ["写代码","学高数","记单词"]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -32,5 +32,21 @@ let itemArray = ["写代码","学高数","记单词"]
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
+    @IBAction func addButtonPressed(_ sender: Any) {
+        var textField = UITextField()
+        let alert = UIAlertController (title: "添加一个新的ToDo项目", message: " ", preferredStyle: .alert)
+        let action = UIAlertAction (title: "添加项目", style: .default){
+            (action) in
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+            print(textField.text!)
+        }
+        alert.addTextField(configurationHandler: {(alertTextField) in
+            alertTextField.placeholder = "创建一个新的项目..."
+            textField = alertTextField
+        })
+        alert.addAction(action)
+        present(alert,animated: true,completion: nil)
+    }
 }
 
